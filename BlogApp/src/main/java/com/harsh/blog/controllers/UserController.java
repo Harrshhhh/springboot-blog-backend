@@ -2,6 +2,7 @@ package com.harsh.blog.controllers;
 
 import com.harsh.blog.payloads.UserDTO;
 import com.harsh.blog.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
         UserDTO createUserDTO = this.userService.createUser(userDTO);
         return new ResponseEntity<>(createUserDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUserByID(@RequestBody UserDTO userDTO, @PathVariable Long userId){
+    public ResponseEntity<UserDTO> updateUserByID(@Valid @RequestBody UserDTO userDTO, @PathVariable Long userId){
         UserDTO updatedUserById = this.userService.updateUserById(userDTO, userId);
         return ResponseEntity.ok(updatedUserById);
     }
